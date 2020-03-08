@@ -7,8 +7,7 @@ from src.train.trainer_builder import TrainerBuilder
 def get_parser():
     parser = ArgumentParser()
     parser.add_argument('--save_raw', type=bool, default=False, help="save the raw or results in png")
-    parser.add_argument('--data-path', default='../data/ica', help="path to the data")
-    parser.add_argument('--model', choices=["beta-vae", "ae", "gan", "wica"], default="gan", help="the model to use")
+    parser.add_argument('--data-path', default='./data/ica', help="path to the data")
     parser.add_argument('--num-epochs', type=int, default=5, help="number of epochs")
     parser.add_argument('--lr', type=float, default=1e-3, help="the learning rate")
     parser.add_argument('--batch-size', type=int, default=1024, help='size of one batch')
