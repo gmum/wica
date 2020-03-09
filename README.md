@@ -7,7 +7,8 @@ This is an implementation of the work described in:
 
 ## Dependencies.
 
-All dependencies are listed in the requirements.txt
+All dependencies are listed in the requirements.txt.
+
 Dataset of images for mixing is available [here](https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/bsds/BSDS300/html/dataset/images.html).
 
 ## Training the Model.
