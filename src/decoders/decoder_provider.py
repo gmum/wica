@@ -17,6 +17,9 @@ class FlattenImagesICADecoder(object):
 
 
 class DecoderProvider:
+    """
+    Provides the decoder architecture.
+    """
     def __init__(self):
         pass
 

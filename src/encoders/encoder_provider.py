@@ -14,12 +14,15 @@ class FlattenImagesICAEncoder:
                 nn.Sequential(nn.ReLU()),
                 nn.Sequential(nn.Identity())
             ],
-            hidden_dims=[32]
+            hidden_dims=[128]
         )
         return encoder
 
 
 class EncoderProvider:
+    """
+    Provides the encoder architecture.
+    """
     def __init__(self):
         pass
 

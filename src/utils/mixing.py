@@ -17,17 +17,20 @@ def _parse_arguments():
     parse input arguments, run with -h for help
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument('--outputdir', type=str, help='directory for the outputs')
-    parser.add_argument('--inputdir', type=str, help="directory for the inputs")
-    parser.add_argument('--samples', type=int, help='how many samples to mix')
-    parser.add_argument('--times', type=int, help="how many times the nonlinear mix should be applied")
-    parser.add_argument('--mix-type', type=str, help="type of the nonlinear mix")
-    parser.add_argument('--activation-fun', type=str, choices=["relu", "tanh", "cos", "anica_mlp", "neural_net"],
-                        default="tanh", help="activation function - if a nonlinear was chosen as the mix-type")
+    parser.add_argument('--outputdir', type=str, help='directory for the outputs.')
+    parser.add_argument('--inputdir', type=str, help="directory for the inputs.")
+    parser.add_argument('--samples', type=int, default=2, help='how many samples to mix.')
+    parser.add_argument('--times', type=int, default=3, help="how many times the nonlinear mixing should be applied.")
+    parser.add_argument('--mix-type', type=str, default="nonlinear", help="type of the mix",
+                        choices=["nonlinear", "linear"])
+    parser.add_argument('--activation-fun', default="neural_net", type=str,
+                        choices=["relu", "tanh", "cos", "anica_mlp", "neural_net"],
+                        help="nonlinear function used in the flow mixing model. Used if 'nonlinear' "
+                                             "mixing was specified as the mixing type.")
     parser.add_argument('--activation-fun-for-neural-net', type=str, choices=["relu", "tanh", "sigmoid"],
-                        default="tanh", help="activation function - if a neural net was chosen as the mixing")
+                        default="tanh", help="activation function - if a neural net was chosen as the mixing.")
     parser.add_argument('--seed', type=int, default=123)
-    parser.add_argument('--nr-samples', type=int, default=5)
+    parser.add_argument('--nr-examples', type=int, default=5, help="how many mixes to produce")
     args = parser.parse_args()
     return args
 
@@ -48,7 +51,7 @@ def mlp(rs, Z, dim, fun):
     elif fun == "tanh":
         f = np.tanh
     else:
-        raise ValueError("Unknown fun {}".format(fun))
+        raise ValueError("Unknown activation function {}".format(fun))
     A = rs.normal(size=(dim, dim))
     b = rs.normal(dim)
     K1 = f(np.matmul(Z, A) + b)
@@ -152,7 +155,7 @@ def linear_mixing(args):
 
 if __name__ == "__main__":
     args = _parse_arguments()
-    for i in range(0, args.nr_samples):
+    for i in range(0, args.nr_examples):
         if args.mix_type == "nonlinear":
             Z, shape, images = nonlinear_mixing(args)
         elif args.mix_type == "linear":

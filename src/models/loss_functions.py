@@ -13,6 +13,9 @@ class LossFunction:
 
 
 class JoinedLoss(LossFunction):
+    """
+    Implements joined loss function (reconstruction loss and independence loss).
+    """
     def __init__(self, ind_loss, reg_loss, beta, return_separate=False):
         super(JoinedLoss, self).__init__()
         self.beta = beta
@@ -31,6 +34,9 @@ class JoinedLoss(LossFunction):
 
 
 class ReconstructionLoss(LossFunction):
+    """
+    Represents the reconstruction loss.
+    """
     def __init__(self, ):
         super(ReconstructionLoss, self).__init__()
 
@@ -48,6 +54,9 @@ class ReconstructionLoss(LossFunction):
 
 
 class MSELossFunction(ReconstructionLoss):
+    """
+    The Mean Square Error loss.
+    """
     def __init__(self):
         super(MSELossFunction, self).__init__()
         self.mse = nn.MSELoss()
@@ -58,6 +67,9 @@ class MSELossFunction(ReconstructionLoss):
 
 
 class BinaryCrossEntropyFunction(ReconstructionLoss):
+    """
+    The Binary Cross Entropy loss.
+    """
     def __init__(self):
         super(BinaryCrossEntropyFunction, self).__init__()
         self.bce = nn.BCELoss()
@@ -68,6 +80,9 @@ class BinaryCrossEntropyFunction(ReconstructionLoss):
 
 
 class WeightedICALossFunction(LossFunction):
+    """
+    The weighted correlation loss (the independence loss).
+    """
     def __init__(self, power, number_of_gausses, cuda, z_dim=None):
         super(WeightedICALossFunction, self).__init__()
         self.power = power
@@ -94,7 +109,7 @@ class WeightedICALossFunction(LossFunction):
         scale = (1 / dim) ** self.power
         sampled_points = self.random_choice_full(x, dim)
 
-        cov_mat = (scale * torch.eye(dim)).repeat(self.number_of_gausses, 1, 1)  # .type(torch.float64)
+        cov_mat = (scale * torch.eye(dim)).repeat(self.number_of_gausses, 1, 1)
         if self.cuda:
             cov_mat = cov_mat.cuda()
 

@@ -26,7 +26,7 @@ class Trainer:
     def save_images_from_epoch(args, train_imgs, test_imgs, epoch):
         if (epoch + 1) % args.save_every == 0:
             if not args.save_raw:
-                # specific for this dataset (select only first image)
+                # specific for this dataset (selects only the first image)
                 save_train = to_img(train_imgs[0:321 * 481].T.reshape(2, 1, 321, 481).cpu().data, args.normalize_img)
                 save_test = to_img(test_imgs[0:321 * 481].T.reshape(2, 1, 321, 481).cpu().data, args.normalize_img)
                 save_image(save_train,
@@ -47,8 +47,6 @@ class Trainer:
         for key, value in loss_dict.items():
             report_string += '[{}:{:.4f}]. '.format(key, value)
         print(report_string)
-
-
 
 
 class IndependenceAETrainer(Trainer):
@@ -99,7 +97,7 @@ class IndependenceAETrainer(Trainer):
 
                 images_to_save.extend(t_recon)
 
-                if epoch == num_epochs - 1:
+                if epoch == num_epochs - 1 and args.save_raw:
                     save_test = t_encoded.cpu().data
                     path_test = os.path.join(os.path.join(args.folder, 'images'),
                                              'icatest_{}_{}.npy'.format(batch_idx, epoch))

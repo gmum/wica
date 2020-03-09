@@ -2,10 +2,10 @@
 
 
 python3 src/utils/mixing.py \
-                --inputdir '<path_to_picutures>' \
+          --inputdir '<path_to_pictures>' \
     			--outputdir data/ica/ \
     			--samples 2 \
-    			--nr-samples 5 \
+    			--nr-examples 5 \
     			--seed 42 \
     			--time 3 \
     			--mix-type nonlinear \

@@ -7,6 +7,9 @@ from torch.utils.data import Dataset
 
 
 class FlattenedPicturesDataset(Dataset):
+    """
+    The dataset containing a flattened mix of pictures.
+    """
 
     def __init__(self, path_to_mixes, mix_dim, orig_dim):
         self.path_to_mixes = path_to_mixes
