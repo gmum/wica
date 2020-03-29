@@ -74,7 +74,7 @@ class IndependenceAETrainer(Trainer):
                 optimizer.zero_grad()
                 loss, recon, encoded = self.calculate_loss(data)
 
-                images_to_save.extend(recon)
+                images_to_save.extend(encoded)
 
                 loss.backward()
                 train_loss += loss.data
@@ -95,7 +95,7 @@ class IndependenceAETrainer(Trainer):
                     data = data.cuda()
                 loss, t_recon, t_encoded = self.calculate_loss(data)
 
-                images_to_save.extend(t_recon)
+                images_to_save.extend(t_encoded)
 
                 if epoch == num_epochs - 1 and args.save_raw:
                     save_test = t_encoded.cpu().data
