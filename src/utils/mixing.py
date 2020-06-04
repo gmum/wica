@@ -61,8 +61,8 @@ def mlp(rs, Z, dim, fun):
     return K2
 
 
-def flow_mixing(rs, Z, dim, times):
-    for t in range(times):
+def flow_mixing(rs, Z, dim, args):
+    for t in range(args.times):
         A = rs.normal(size=(dim, dim))
         hdim = dim // 2
         H = rs.normal(size=(hdim, hdim))
